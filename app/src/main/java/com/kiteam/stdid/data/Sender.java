@@ -19,7 +19,7 @@ public class Sender {
 
     public void send(String code, Student student) {
         firebaseStorage.getReference()
-                .child(code + ".json")
+                .child("user.json")
                 .putBytes(gson.toJson(student).getBytes());
     }
 
