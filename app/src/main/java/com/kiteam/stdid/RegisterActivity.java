@@ -60,6 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void navigateToScan() {
         Intent intent = new Intent(this, ScannerActivity.class);
-        startActivityForResult(intent, RESULT_OK);
+        startActivityForResult(intent, RESULT_FIRST_USER);
     }
 }

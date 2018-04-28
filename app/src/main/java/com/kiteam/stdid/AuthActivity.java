@@ -39,7 +39,8 @@ public class AuthActivity extends AppCompatActivity {
         sender = new Sender(FirebaseStorage.getInstance(), new Gson());
 
         authBtn.setOnClickListener(v -> {
-            ScannerActivity.startActivity(this);
+            Intent intent = new Intent(this, ScannerActivity.class);
+            startActivityForResult(intent, RESULT_FIRST_USER);
         });
     }
 
