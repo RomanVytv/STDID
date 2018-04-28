@@ -2,6 +2,8 @@ package com.kiteam.stdid;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -41,10 +43,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showError() {
-
+        Snackbar.make(btnSignIn.getRootView(), "Incorrect credentials. Please, try again.", BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
     private void navigateToScanActivity() {
+        ScannerActivity.startActivity(this);
     }
 
     private boolean isStudentIdValid() {
@@ -52,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid() {
-        return TextUtils.isEmpty(etPassword.getText());
+        return !TextUtils.isEmpty(etPassword.getText());
     }
 }
 
