@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             StudentData studentData = StudentRepository.getInstance().get(id, pass);
             StudentAuth.getInstance().auth(studentData);
 
-            navigateToScanActivity();
+            navigateToAuthActivity();
         } else {
             showError();
         }
@@ -59,12 +59,12 @@ public class LoginActivity extends AppCompatActivity {
         Snackbar.make(btnSignIn.getRootView(), "Incorrect credentials. Please, try again.", BaseTransientBottomBar.LENGTH_SHORT).show();
     }
 
-    private void navigateToScanActivity() {
-        ScannerActivity.startActivity(this);
+    private void navigateToAuthActivity() {
+        AuthActivity.startActivity(this);
     }
 
     private boolean isStudentIdValid() {
-        return etStudentId.getText().length() == 8;
+        return etStudentId.getText().length() >= 8;
     }
 
     private boolean isPasswordValid() {

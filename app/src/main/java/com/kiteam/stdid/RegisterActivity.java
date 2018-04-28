@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public static void startActivity(Activity activity) {
-        Intent intent = new Intent(activity, ScannerActivity.class);
+        Intent intent = new Intent(activity, RegisterActivity.class);
         activity.startActivity(intent);
     }
 

@@ -27,7 +27,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
     private Toolbar toolbar;
     private ZXingScannerView scannerView;
-    private Sender sender;
 
     public static void startActivity(Activity activity) {
         Intent intent = new Intent(activity, ScannerActivity.class);
@@ -35,13 +34,12 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     }
 
     @Override
-    public void onCreate(Bundle state) {
+    protected void onCreate(Bundle state) {
         super.onCreate(state);
         setContentView(R.layout.activity_scan);
 
         scannerView = findViewById(R.id.scanner_view);
         toolbar = findViewById(R.id.toolbar);
-        sender = new Sender(FirebaseStorage.getInstance(), new Gson());
 
         setSupportActionBar(toolbar);
     }
@@ -61,21 +59,9 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
     @Override
     public void handleResult(Result rawResult) {
-        String codetype = rawResult.getBarcodeFormat().name();
-        String code = rawResult.getText();
-
-        if (!rawResult.getBarcodeFormat().equals(BarcodeFormat.QR_CODE)) {
-            Intent intent = new Intent();
-            intent.putExtra(SCAN_RESULT, rawResult.getText());
-            setResult(RESULT_OK, intent);
-            finish();
-        }
-
-        Toast.makeText(this, codetype + " - " + code, Toast.LENGTH_LONG).show();
-
-        Student student = Student.from(StudentAuth.getInstance().get());
-        sender.send(code, student);
-
-        // TODO navigate to success screen.
+        Intent intent = new Intent();
+        intent.putExtra(SCAN_RESULT, rawResult.getText());
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
