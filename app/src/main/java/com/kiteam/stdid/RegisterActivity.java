@@ -62,6 +62,4 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ScannerActivity.class);
         startActivityForResult(intent, RESULT_OK);
     }
-
-
 }
