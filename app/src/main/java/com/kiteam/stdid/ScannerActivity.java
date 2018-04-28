@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.gson.Gson;
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.kiteam.stdid.data.Sender;
 import com.kiteam.stdid.data.StudentAuth;
@@ -21,6 +22,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  */
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+
+    public static final String SCAN_RESULT = "SCAN_RESULT";
 
     private Toolbar toolbar;
     private ZXingScannerView scannerView;
@@ -60,6 +63,13 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     public void handleResult(Result rawResult) {
         String codetype = rawResult.getBarcodeFormat().name();
         String code = rawResult.getText();
+
+        if (!rawResult.getBarcodeFormat().equals(BarcodeFormat.QR_CODE)) {
+            Intent intent = new Intent();
+            intent.putExtra(SCAN_RESULT, rawResult.getText());
+            setResult(RESULT_OK, intent);
+            finish();
+        }
 
         Toast.makeText(this, codetype + " - " + code, Toast.LENGTH_LONG).show();
 

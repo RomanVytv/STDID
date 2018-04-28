@@ -6,7 +6,6 @@ import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -22,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etStudentId;
     EditText etPassword;
     Button btnSignIn;
+    Button btnSignUp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,12 +31,14 @@ public class LoginActivity extends AppCompatActivity {
         etStudentId = findViewById(R.id.student_id);
         etPassword = findViewById(R.id.password);
         btnSignIn = findViewById(R.id.sign_in_button);
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        btnSignIn.setOnClickListener(v -> signIn());
+
+        btnSignUp = findViewById(R.id.sign_up_button);
+        btnSignUp.setOnClickListener(v -> navigateToSignUp());
+    }
+
+    private void navigateToSignUp() {
+        RegisterActivity.startActivity(this);
     }
 
     private void signIn() {
