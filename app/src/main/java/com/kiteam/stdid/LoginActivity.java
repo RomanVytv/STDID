@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.kiteam.stdid.data.StudentAuth;
+import com.kiteam.stdid.data.StudentRepository;
+import com.kiteam.stdid.models.StudentData;
+
 /**
  * A login screen that offers login via email/etPassword.
  */
@@ -36,10 +40,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn() {
-        if(isPasswordValid() && isStudentIdValid())
+        if (isPasswordValid() && isStudentIdValid()) {
+            String id = etStudentId.getText().toString();
+            String pass = etPassword.getText().toString();
+
+            StudentData studentData = StudentRepository.getInstance().get(id, pass);
+            StudentAuth.getInstance().auth(studentData);
+
             navigateToScanActivity();
-        else
+        } else {
             showError();
+        }
     }
 
     private void showError() {

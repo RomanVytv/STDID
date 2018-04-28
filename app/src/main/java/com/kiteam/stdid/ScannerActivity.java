@@ -7,7 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.gson.Gson;
 import com.google.zxing.Result;
+import com.kiteam.stdid.data.Sender;
+import com.kiteam.stdid.data.StudentAuth;
+import com.kiteam.stdid.models.Student;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -19,6 +24,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
     private Toolbar toolbar;
     private ZXingScannerView scannerView;
+    private Sender sender;
 
     public static void startActivity(Activity activity) {
         Intent intent = new Intent(activity, ScannerActivity.class);
@@ -32,6 +38,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
         scannerView = findViewById(R.id.scanner_view);
         toolbar = findViewById(R.id.toolbar);
+        sender = new Sender(FirebaseStorage.getInstance(), new Gson());
 
         setSupportActionBar(toolbar);
     }
@@ -56,7 +63,9 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
         Toast.makeText(this, codetype + " - " + code, Toast.LENGTH_LONG).show();
 
-        // If you would like to resume scanning, call this method below:
-        scannerView.resumeCameraPreview(this);
+        Student student = Student.from(StudentAuth.getInstance().get());
+        sender.send(code, student);
+
+        // TODO navigate to success screen.
     }
 }
